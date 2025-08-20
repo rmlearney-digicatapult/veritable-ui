@@ -136,7 +136,7 @@ export class QueriesController extends HTMLController {
       connectionId: UUID
       productId: string
       quantity: number
-      expiresAt: Date
+      expiresAt: string
     }
   ) {
     const connection = await this.verifyConnection(req.log, body.connectionId)
@@ -171,7 +171,7 @@ export class QueriesController extends HTMLController {
     @Body()
     body: {
       connectionId: UUID
-      expiresAt: Date
+      expiresAt: string
     }
   ) {
     const connection = await this.verifyConnection(req.log, body.connectionId)
@@ -467,7 +467,7 @@ export class QueriesController extends HTMLController {
     connectionId: UUID,
     parentId: UUID | null,
     params: Omit<SubmitQueryRequest['params'], 'id' | 'createdTime' | 'expiresTime'>,
-    expiresTime: Date
+    expiresTime: string
   ) {
     const [connection]: ConnectionRow[] = await this.db.get(
       'connection',
