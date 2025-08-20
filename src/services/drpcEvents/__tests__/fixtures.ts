@@ -23,8 +23,8 @@ export const goodRequest: DrpcRequest = {
       },
     },
     type: 'https://github.com/digicatapult/veritable-documentation/tree/main/schemas/veritable_messaging/query_types/total_carbon_embodiment/request/0.1',
-    createdTime: 0,
-    expiresTime: 1,
+    createdTime: new Date(Date.now()).toISOString(),
+    expiresTime: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
   },
 }
 
