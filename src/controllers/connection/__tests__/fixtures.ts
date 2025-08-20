@@ -115,8 +115,8 @@ export const validPendingCompany = {
 export const validConnection: ConnectionRow = {
   id: '4a5d4085-5924-43c6-b60d-754440332e3d',
   agent_connection_id: randomUUID(),
-  created_at: new Date(),
-  updated_at: new Date(),
+  created_at: new Date().toISOString(),
+  updated_at: new Date().toISOString(),
   status: 'pending',
   company_number: validCompanyNumber,
   company_name: 'must be a valid company name',

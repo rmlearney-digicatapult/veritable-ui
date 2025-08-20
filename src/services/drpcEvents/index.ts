@@ -121,7 +121,7 @@ export default class DrpcEvents {
         response_id: params.id, //save to send back in response
         response: null,
         role: 'responder',
-        expires_at: new Date(params.expiresTime * 1000),
+        expires_at: new Date(Date.parse(params.expiresTime) * 1000).toISOString(),
       })
       queryId = query.id
 

@@ -48,12 +48,12 @@ export const withConnectionMocks = (
     waitForCondition: () => [
       {
         id: 'someId',
-        created_at: new Date(),
+        created_at: new Date().toISOString(),
         company_name: 'COMPANY_NAME',
         company_number: 'COMPANY_NUMBER',
         status: finalStatus,
         agent_connection_id: '11110000',
-        updated_at: new Date(),
+        updated_at: new Date().toISOString(),
         pin_attempt_count: 0,
         pin_tries_remaining_count: finalPinAttemptTries,
       },

@@ -332,7 +332,7 @@ describe('NewConnectionController', () => {
         expect(rest).deep.equal({
           connection_id: '42',
           oob_invite_id: 'id-NAME',
-          expires_at: new Date(100 + 14 * 24 * 60 * 60 * 1000),
+          expires_at: new Date(100 + 14 * 24 * 60 * 60 * 1000).toISOString(),
           validity: 'valid',
         })
         expect(typeof pin_hash).to.equal('string')
@@ -696,7 +696,7 @@ describe('NewConnectionController', () => {
         expect(rest).deep.equal({
           connection_id: '42',
           oob_invite_id: 'oob-record',
-          expires_at: new Date(100 + 14 * 24 * 60 * 60 * 1000),
+          expires_at: new Date(100 + 14 * 24 * 60 * 60 * 1000).toISOString(),
           validity: 'valid',
         })
         expect(typeof pin_hash).to.equal('string')

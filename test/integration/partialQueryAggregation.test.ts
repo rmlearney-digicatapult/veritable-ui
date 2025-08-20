@@ -32,7 +32,7 @@ describe('partial query aggregation', function () {
         connectionId: context.aliceConnectionId,
         productId: 'toaster-001(AliceReq)',
         quantity: 1,
-        expiresAt: new Date(),
+        expiresAt: new Date().toISOString(),
       })
 
       const queryId = await context.db.bob.get('query').then((res) => res[0].id)

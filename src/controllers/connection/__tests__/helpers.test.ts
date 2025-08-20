@@ -10,12 +10,12 @@ describe('CheckDb helper function', () => {
       [
         {
           id: 'someId',
-          created_at: new Date(),
+          created_at: new Date().toISOString(),
           company_name: 'SomeName',
           company_number: '111111',
           status: 'pending',
           agent_connection_id: '11110000',
-          updated_at: new Date(),
+          updated_at: new Date().toISOString(),
           pin_attempt_count: 0,
           pin_tries_remaining_count: 1,
           registry_country_code: 'GB',
@@ -36,12 +36,12 @@ describe('CheckDb helper function', () => {
       [
         {
           id: 'someId',
-          created_at: new Date(),
+          created_at: new Date().toISOString(),
           company_name: 'SomeName',
           company_number: '111111',
           status: 'verified_us',
           agent_connection_id: '11110000',
-          updated_at: new Date(),
+          updated_at: new Date().toISOString(),
           pin_attempt_count: 0,
           pin_tries_remaining_count: 4,
           registry_country_code: 'GB',
@@ -58,12 +58,12 @@ describe('CheckDb helper function', () => {
       [
         {
           id: 'someId',
-          created_at: new Date(),
+          created_at: new Date().toISOString(),
           company_name: 'SomeName',
           company_number: '111111',
           status: 'pending',
           agent_connection_id: '11110000',
-          updated_at: new Date(),
+          updated_at: new Date().toISOString(),
           pin_attempt_count: 0,
           pin_tries_remaining_count: 0,
           registry_country_code: 'GB',
@@ -85,12 +85,12 @@ describe('CheckDb helper function', () => {
       [
         {
           id: 'someId',
-          created_at: new Date(),
+          created_at: new Date().toISOString(),
           company_name: 'SomeName',
           company_number: '111111',
           status: 'pending',
           agent_connection_id: '11110000',
-          updated_at: new Date(),
+          updated_at: new Date().toISOString(),
           pin_attempt_count: 0,
           pin_tries_remaining_count: 4,
           registry_country_code: 'GB',
@@ -114,12 +114,12 @@ describe('CheckDb helper function', () => {
         [
           {
             id: 'someId',
-            created_at: new Date(),
+            created_at: new Date().toISOString(),
             company_name: 'SomeName',
             company_number: '111111',
             status: 'pending',
             agent_connection_id: '11110000',
-            updated_at: new Date(),
+            updated_at: new Date().toISOString(),
             pin_attempt_count: 0,
             pin_tries_remaining_count: null,
             registry_country_code: 'GB',
@@ -141,12 +141,12 @@ describe('CheckDb helper function', () => {
         [
           {
             id: 'someId',
-            created_at: new Date(),
+            created_at: new Date().toISOString(),
             company_name: 'SomeName',
             company_number: '111111',
             status: 'pending',
             agent_connection_id: '11110000',
-            updated_at: new Date(),
+            updated_at: new Date().toISOString(),
             pin_attempt_count: 0,
             pin_tries_remaining_count: 6,
             registry_country_code: 'GB',

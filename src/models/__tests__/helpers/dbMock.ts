@@ -14,8 +14,8 @@ const ukRegistry: OrganisationRegistriesRow = {
   registry_key: 'company_house',
   url: env.get('COMPANY_HOUSE_API_URL'),
   api_key: '',
-  created_at: new Date(),
-  updated_at: new Date(),
+  created_at: new Date().toISOString(),
+  updated_at: new Date().toISOString(),
 }
 
 // Mock data for NY registry (Socrata)
@@ -26,8 +26,8 @@ const nyRegistry: OrganisationRegistriesRow = {
   registry_key: 'socrata',
   url: env.get('SOCRATA_API_URL'),
   api_key: '',
-  created_at: new Date(),
-  updated_at: new Date(),
+  created_at: new Date().toISOString(),
+  updated_at: new Date().toISOString(),
 }
 
 export const mockDb = {

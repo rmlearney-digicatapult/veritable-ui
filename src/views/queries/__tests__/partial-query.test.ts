@@ -6,7 +6,7 @@ import { CountryCode } from '../../../models/stringTypes.js'
 import QueryResponseTemplates from '../queryResponse.js'
 
 const templates = new QueryResponseTemplates()
-const sampleDate = new Date(Date.UTC(2024, 6, 4))
+const sampleDate = new Date(Date.UTC(2024, 6, 4)).toISOString()
 const connectionsExample: ConnectionRow[] = [{}, {}, {}, {}].map((_, i) => ({
   id: `${mockIds.connectionId.substr(0, mockIds.connectionId.length - 1)}${i}`,
   company_name: 'I own you',
@@ -35,9 +35,9 @@ const queryExample: QueryRow = {
   response_id: null,
   response: null,
   role: 'requester',
-  created_at: new Date(),
-  updated_at: new Date(),
-  expires_at: new Date(),
+  created_at: new Date().toISOString(),
+  updated_at: new Date().toISOString(),
+  expires_at: new Date().toISOString(),
 }
 
 describe('Partial Query', () => {
@@ -53,8 +53,8 @@ describe('Partial Query', () => {
           agent_connection_id: mockIds.agentConnectionId,
           pin_tries_remaining_count: null,
           pin_attempt_count: 0,
-          created_at: new Date(),
-          updated_at: new Date(),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
           registry_country_code: 'GB' as CountryCode,
         },
         type: 'total_carbon_embodiment',
@@ -78,8 +78,8 @@ describe('Partial Query', () => {
         agent_connection_id: mockIds.agentConnectionId,
         pin_tries_remaining_count: null,
         pin_attempt_count: 0,
-        created_at: new Date(),
-        updated_at: new Date(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
         registry_country_code: 'GB' as CountryCode,
       },
       type: 'total_carbon_embodiment',

@@ -95,7 +95,7 @@ export default class CompanyDetailsV1Handler implements CredentialEventHandler<'
     const isPinValid = (
       await Promise.all(
         pinInvites.map(async ({ pin_hash, expires_at, id }) => {
-          if (expires_at < new Date()) {
+          if (Date.parse(expires_at) < Date.now()) {
             await this.db.update('connection_invite', { id }, { validity: 'expired' })
             return false
           }

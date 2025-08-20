@@ -11,7 +11,7 @@ import QueryListTemplates from '../../../views/queries/queriesList.js'
 import QueryRequestTemplates from '../../../views/queries/queryRequest.js'
 import QueryResponseTemplates, { ResponseFormProps } from '../../../views/queries/queryResponse.js'
 
-export const expiresAt = new Date('2025-08-06T15:33:20.589Z')
+export const expiresAt = new Date('2025-08-06T15:33:20.589Z').toISOString()
 
 type QueryStatus = 'resolved' | 'pending_your_input' | 'pending_their_input' | 'forwarded'
 
@@ -76,7 +76,7 @@ const defaultOptions: QueryMockOptions = {
         },
         response_id: '5390af91-c551-4d74-b394-d8ae0805059e',
         expires_at: expiresAt,
-        created_at: new Date(1000),
+        created_at: new Date(1000).toISOString(),
       },
       {
         id: '5390af91-c551-4d74-b394-d8ae0805059a',
@@ -94,7 +94,7 @@ const defaultOptions: QueryMockOptions = {
         },
         response_id: '5390af91-c551-4d74-b394-d8ae0805059e',
         expires_at: expiresAt,
-        created_at: new Date(1000),
+        created_at: new Date(1000).toISOString(),
       },
       {
         status: 'pending_your_input',
@@ -111,7 +111,7 @@ const defaultOptions: QueryMockOptions = {
         },
         response_id: '5390af91-c551-4d74-b394-d8ae0805059e',
         expires_at: expiresAt,
-        created_at: new Date(1000),
+        created_at: new Date(1000).toISOString(),
       },
     ],
     queryInsert: [
@@ -133,7 +133,7 @@ const defaultOptions: QueryMockOptions = {
         response: null,
         role: 'requester',
         expires_at: expiresAt,
-        created_at: new Date(1000),
+        created_at: new Date(1000).toISOString(),
       },
     ],
   },

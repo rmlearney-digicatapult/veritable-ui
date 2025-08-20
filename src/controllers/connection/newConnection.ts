@@ -495,13 +495,13 @@ export class NewConnectionController extends HTMLController {
         await db.update(
           'connection_invite',
           { connection_id: connectionId, validity: 'valid' },
-          { expires_at: new Date(), validity: 'expired' }
+          { expires_at: new Date().toISOString(), validity: 'expired' }
         )
         // expire existing invitations if they're 'used' (condition verified_them && used, and verified_both && used already aborted in allowNewInvitation)
         await db.update(
           'connection_invite',
           { connection_id: connectionId, validity: 'used' },
-          { expires_at: new Date(), validity: 'expired' }
+          { expires_at: new Date().toISOString(), validity: 'expired' }
         )
         // reset pin count and invite status to 'pending'
         await db.update(
@@ -518,7 +518,7 @@ export class NewConnectionController extends HTMLController {
           connection_id: connectionId,
           oob_invite_id: invitationId,
           pin_hash: pinHash,
-          expires_at: new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000),
+          expires_at: new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000).toISOString(),
           validity: 'valid',
         })
       })
@@ -565,7 +565,7 @@ export class NewConnectionController extends HTMLController {
           connection_id: record.id,
           oob_invite_id: invitationId,
           pin_hash: pinHash,
-          expires_at: new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000),
+          expires_at: new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000).toISOString(),
           validity: 'valid',
         })
         connectionId = record.id
