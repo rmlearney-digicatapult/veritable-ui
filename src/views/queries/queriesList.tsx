@@ -123,13 +123,16 @@ export default class QueryListTemplates {
                     <td>
                       <time>
                         {Html.escapeHtml(
-                          `${query.expires_at.toLocaleDateString('en-GB')} - ${query.expires_at.toLocaleTimeString(
-                            'en-GB',
-                            {
+                          `${new Date(query.expires_at)
+                            .toLocaleString('en-GB', {
+                              year: 'numeric',
+                              month: '2-digit',
+                              day: '2-digit',
                               hour: '2-digit',
                               minute: '2-digit',
-                            }
-                          )}`
+                              hour12: false,
+                            })
+                            .replace(',', ' -')}`
                         )}
                       </time>
                     </td>
