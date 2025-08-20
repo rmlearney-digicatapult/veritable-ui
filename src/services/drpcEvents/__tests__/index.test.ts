@@ -20,6 +20,8 @@ import {
 } from './fixtures.js'
 import { withDrpcEventMocks } from './helpers.js'
 
+const twoWeeks = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString()
+
 // NB stubbed calls do not use UUIDs for connectionId, query_id, agent-connection-id
 
 describe('DrpcEvents', function () {
@@ -91,7 +93,7 @@ describe('DrpcEvents', function () {
             response_id: goodResponseId,
             role: 'responder',
             response: null,
-            expires_at: new Date(1000).toISOString(),
+            expires_at: twoWeeks,
           },
         ])
         expect(stub.secondCall.args).to.deep.equal([
@@ -500,7 +502,7 @@ describe('DrpcEvents', function () {
             response_id: goodResponseId,
             response: null,
             role: 'responder',
-            expires_at: new Date(1000).toISOString(),
+            expires_at: twoWeeks,
           },
         ])
       })

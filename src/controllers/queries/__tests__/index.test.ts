@@ -7,7 +7,7 @@ import { Request } from 'express'
 import { InvalidInputError } from '../../../errors.js'
 import { mockLogger } from '../../__tests__/helpers.js'
 import { QueriesController } from '../index.js'
-import { expiresAt, mockIds, toHTMLString, withQueriesMocks } from './helpers.js'
+import { expiresAtTest, mockIds, toHTMLString, withQueriesMocks } from './helpers.js'
 
 chai.use(chaiAsPromised)
 const expect = chai.expect
@@ -82,7 +82,7 @@ describe('QueriesController', () => {
           connectionId: 'connection-id',
           productId: 'SomeID',
           quantity: 111,
-          expiresAt,
+          expiresAt: expiresAtTest,
         })
         .then(toHTMLString)
 
@@ -105,7 +105,7 @@ describe('QueriesController', () => {
           response_id: null,
           role: 'requester',
           status: 'pending_their_input',
-          expires_at: expiresAt,
+          expires_at: expiresAtTest,
         },
       ])
       expect(result).to.equal('queryForm_success_queryForm')
@@ -121,7 +121,7 @@ describe('QueriesController', () => {
           connectionId: 'connection-id',
           productId: 'SomeID',
           quantity: 111,
-          expiresAt,
+          expiresAt: expiresAtTest,
         })
         .then(toHTMLString)
 
@@ -138,7 +138,7 @@ describe('QueriesController', () => {
           connectionId: 'connection-id',
           productId: 'SomeID',
           quantity: 111,
-          expiresAt,
+          expiresAt: expiresAtTest,
         })
         .then(toHTMLString)
       expect(dbMock.update.getCall(0).args).to.deep.equal([
@@ -162,7 +162,7 @@ describe('QueriesController', () => {
           connectionId: 'connection-id',
           productId: 'SomeID',
           quantity: 111,
-          expiresAt,
+          expiresAt: expiresAtTest,
         })
         .then(toHTMLString)
       expect(dbMock.update.getCall(0).args).to.deep.equal([
@@ -358,8 +358,9 @@ describe('QueriesController', () => {
       })
 
       it('submits a Drpc request to the cloudagent', () => {
+        const createdTime = cloudagentMock.submitDrpcRequest.firstCall.args[2].createdTime
         expect(cloudagentMock.submitDrpcRequest.callCount).to.equal(1)
-        expect(cloudagentMock.submitDrpcRequest.firstCall.args).to.have.deep.members([
+        expect(cloudagentMock.submitDrpcRequest.firstCall.args).to.deep.equal([
           'aaaaaaaa-0000-4000-8000-d8ae0805059e',
           'submit_query_request',
           {
@@ -374,8 +375,8 @@ describe('QueriesController', () => {
             },
             id: 'ccaaaaaa-0000-4000-8000-d8ae0805059e',
             type: 'https://github.com/digicatapult/veritable-documentation/tree/main/schemas/veritable_messaging/query_types/total_carbon_embodiment/request/0.1',
-            createdTime: 1,
-            expiresTime: Math.floor(expiresAt.getTime() / 1000),
+            createdTime: createdTime,
+            expiresTime: expiresAtTest,
           },
         ])
       })
@@ -400,7 +401,7 @@ describe('QueriesController', () => {
             response_id: null,
             response: null,
             role: 'requester',
-            expires_at: expiresAt,
+            expires_at: expiresAtTest,
           },
         ])
       })
@@ -484,7 +485,7 @@ describe('QueriesController', () => {
             response_id: null,
             response: null,
             role: 'requester',
-            expires_at: expiresAt,
+            expires_at: expiresAtTest,
           },
         ])
         expect(dbMock.insert.getCall(1).args).to.deep.equal([
@@ -506,7 +507,7 @@ describe('QueriesController', () => {
             response_id: null,
             response: null,
             role: 'requester',
-            expires_at: expiresAt,
+            expires_at: expiresAtTest,
           },
         ])
         expect(
