@@ -33,7 +33,7 @@ const insertConnectionInvite = z.object({
   connection_id: z.uuid(),
   oob_invite_id: z.uuid(),
   pin_hash: z.string(),
-  expires_at: z.date(),
+  expires_at: z.iso.datetime(),
   validity: z.enum(['valid', 'expired', 'too_many_attempts', 'used']),
 })
 
@@ -49,7 +49,7 @@ const insertQuery = z.object({
   status: z.enum(['resolved', 'pending_your_input', 'pending_their_input', 'errored', 'forwarded']),
   response_id: z.uuid().nullable(),
   role: z.enum(['requester', 'responder']),
-  expires_at: z.date(),
+  expires_at: z.iso.datetime(),
   details: z.object({
     subjectId: subjectIdParser,
   }),
@@ -59,8 +59,8 @@ const insertQuery = z.object({
 
 const defaultFields = z.object({
   id: z.uuid(),
-  created_at: z.date(),
-  updated_at: z.date(),
+  created_at: z.iso.datetime(),
+  updated_at: z.iso.datetime(),
 })
 
 const insertQueryRpc = z.object({
@@ -97,8 +97,8 @@ const Zod = {
     insert: insertSettings,
     get: insertSettings.extend({
       id: z.uuid(),
-      created_at: z.date(),
-      updated_at: z.date(),
+      created_at: z.iso.datetime(),
+      updated_at: z.iso.datetime(),
     }),
   },
   organisation_registries: {
