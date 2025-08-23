@@ -40,7 +40,7 @@ export default class Database {
     this.db = models
   }
 
-  // backlog item for if statement model === logic has been added and returns etc
+  // TODO: backlog item for if statement model === logic has been added and returns etc
   insert = async <M extends TABLE>(
     model: M,
     record: Models[typeof model]['insert']
