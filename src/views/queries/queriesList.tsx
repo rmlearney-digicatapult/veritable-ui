@@ -125,6 +125,7 @@ export default class QueryListTemplates {
                         {Html.escapeHtml(
                           `${new Date(query.expires_at)
                             .toLocaleString('en-GB', {
+                              timeZone: 'Europe/London',
                               year: 'numeric',
                               month: '2-digit',
                               day: '2-digit',
