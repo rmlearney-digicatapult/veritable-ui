@@ -554,11 +554,11 @@ describe('companyDetailsV1', function () {
         dbGetConnectionInvites: [
           {
             pin_hash: await argon2.hash('123456', { secret: invitePinSecret }),
-            expires_at: new Date(0).toISOString(),
+            expires_at: new Date(0).toISOString(), // Unix date zero
           },
           {
             pin_hash: await argon2.hash('78910', { secret: invitePinSecret }),
-            expires_at: new Date(10).toISOString(),
+            expires_at: new Date(2678400000).toISOString(), // Unix next day
           },
         ],
       })
@@ -599,11 +599,11 @@ describe('companyDetailsV1', function () {
         dbGetConnectionInvites: [
           {
             pin_hash: await argon2.hash('78910', { secret: invitePinSecret }),
-            expires_at: new Date(0).toISOString(),
+            expires_at: new Date(0).toISOString(), // Unix date zero
           },
           {
             pin_hash: await argon2.hash('123456', { secret: invitePinSecret }),
-            expires_at: new Date(10).toISOString(),
+            expires_at: new Date(2678400000).toISOString(), // Unix next day
           },
         ],
       })

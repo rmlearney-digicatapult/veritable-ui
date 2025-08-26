@@ -105,11 +105,11 @@ export default class Database {
     where?: Where<M>,
     timeout?: number
   ): Promise<Models[typeof model]['get'][]> => {
-    const startTime = Date.now()
+    const startTime = new Date().toISOString()
     const timeoutMs = timeout ?? 4000 // 4 seconds
     const interval = 100 // 100 ms
 
-    while (Date.now() - startTime < timeoutMs) {
+    while (Date.now() - Date.parse(startTime) < timeoutMs) {
       const rows = await this.get(model, where)
       if (checkCondition(rows)) {
         return rows

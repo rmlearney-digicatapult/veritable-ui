@@ -18,7 +18,7 @@ type QueryStatus = 'resolved' | 'pending_your_input' | 'pending_their_input' | '
 interface Query {
   company_name: string
   query_type: string
-  updated_at: Date
+  updated_at: string
   status: QueryStatus
 }
 
@@ -76,7 +76,7 @@ const defaultOptions: QueryMockOptions = {
         },
         response_id: '5390af91-c551-4d74-b394-d8ae0805059e',
         expires_at: expiresAtTest,
-        created_at: new Date(Date.now()).toISOString(),
+        created_at: new Date().toISOString(),
       },
       {
         id: '5390af91-c551-4d74-b394-d8ae0805059a',
@@ -94,7 +94,7 @@ const defaultOptions: QueryMockOptions = {
         },
         response_id: '5390af91-c551-4d74-b394-d8ae0805059e',
         expires_at: expiresAtTest,
-        created_at: new Date(Date.now()).toISOString(),
+        created_at: new Date().toISOString(),
       },
       {
         status: 'pending_your_input',
@@ -111,7 +111,7 @@ const defaultOptions: QueryMockOptions = {
         },
         response_id: '5390af91-c551-4d74-b394-d8ae0805059e',
         expires_at: expiresAtTest,
-        created_at: new Date(Date.now()).toISOString(),
+        created_at: new Date().toISOString(),
       },
     ],
     queryInsert: [
@@ -133,7 +133,7 @@ const defaultOptions: QueryMockOptions = {
         response: null,
         role: 'requester',
         expires_at: expiresAtTest,
-        created_at: new Date(Date.now()).toISOString(),
+        created_at: new Date().toISOString(),
       },
     ],
   },

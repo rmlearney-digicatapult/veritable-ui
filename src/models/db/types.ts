@@ -59,8 +59,8 @@ const insertQuery = z.object({
 
 const defaultFields = z.object({
   id: z.uuid(),
-  created_at: z.iso.datetime(),
-  updated_at: z.iso.datetime(),
+  created_at: z.string(),
+  updated_at: z.string(),
 })
 
 const insertQueryRpc = z.object({

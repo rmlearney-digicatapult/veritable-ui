@@ -256,7 +256,7 @@ export const withVerifiedConnection = function (context: TwoPartyContext) {
       connection_id: withAlice.id,
       oob_invite_id: fromAliceOOB.outOfBandRecord.id,
       pin_hash: pinHash,
-      expires_at: new Date(new Date().getTime() + 60 * 1000),
+      expires_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
       validity: 'valid',
     })
 

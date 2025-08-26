@@ -12,8 +12,8 @@ import SettingsTemplates from '../../views/settings/settings.js'
 import { HTML, HTMLController } from './../HTMLController.js'
 
 type SettingsDict = {
-  admin_email: { setting_value: string; created_at: Date; updated_at: Date }
-} & Record<string, { setting_value: string; created_at: Date; updated_at: Date }>
+  admin_email: { setting_value: string; created_at: string; updated_at: string }
+} & Record<string, { setting_value: string; created_at: string; updated_at: string }>
 
 export type SettingsType = {
   company_name: string

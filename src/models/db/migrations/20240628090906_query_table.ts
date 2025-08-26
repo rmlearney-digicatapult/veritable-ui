@@ -1,7 +1,7 @@
 import { Knex } from 'knex'
 
 export async function up(knex: Knex): Promise<void> {
-  const now = () => knex.fn.now()
+  const now = () => new Date().toISOString()
 
   await knex.schema.createTable('query', (def) => {
     def.uuid('id').defaultTo(knex.raw('uuid_generate_v4()')).primary()

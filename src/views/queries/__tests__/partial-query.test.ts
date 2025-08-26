@@ -37,7 +37,7 @@ const queryExample: QueryRow = {
   role: 'requester',
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
-  expires_at: new Date().toISOString(),
+  expires_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
 }
 
 describe('Partial Query', () => {

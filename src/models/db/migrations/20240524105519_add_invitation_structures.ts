@@ -1,7 +1,7 @@
 import { Knex } from 'knex'
 
 export async function up(knex: Knex): Promise<void> {
-  const now = () => knex.fn.now()
+  const now = () => new Date().toISOString()
 
   await knex.schema.alterTable('connection', (def) => {
     def.string('company_number').notNullable()
