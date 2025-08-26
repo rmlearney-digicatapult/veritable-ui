@@ -6,7 +6,7 @@ import ConnectionTemplates from '../connection.js'
 
 describe('ConnectionTemplates', () => {
   describe('listPage', () => {
-    const sampleDate = new Date(Date.UTC(2024, 6, 4))
+    const sampleDate = new Date('2025-08-06T12:00:00')
 
     it('should render with no connections', async () => {
       const templates = new ConnectionTemplates()

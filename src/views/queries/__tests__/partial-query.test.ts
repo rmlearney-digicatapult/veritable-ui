@@ -6,7 +6,7 @@ import { CountryCode } from '../../../models/stringTypes.js'
 import QueryResponseTemplates from '../queryResponse.js'
 
 const templates = new QueryResponseTemplates()
-const sampleDate = new Date(Date.UTC(2024, 6, 4))
+const sampleDate = new Date('2025-08-06T12:00:00')
 const connectionsExample: ConnectionRow[] = [{}, {}, {}, {}].map((_, i) => ({
   id: `${mockIds.connectionId.substr(0, mockIds.connectionId.length - 1)}${i}`,
   company_name: 'I own you',
