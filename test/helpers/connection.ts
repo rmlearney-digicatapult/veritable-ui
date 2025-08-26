@@ -126,7 +126,7 @@ export const withEstablishedConnectionFromUs = function (context: TwoPartyContex
       connection_id: remoteConnectionId,
       oob_invite_id: outOfBandRecord.id,
       pin_hash: pinHash,
-      expires_at: new Date(new Date().getTime() + 60 * 1000),
+      expires_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
       validity: 'valid',
     })
     context.remoteConnectionId = remoteConnectionId
@@ -184,7 +184,7 @@ export const withEstablishedConnectionFromThem = function (context: TwoPartyCont
       connection_id: remoteConnectionId,
       oob_invite_id: invite.outOfBandRecord.id,
       pin_hash: pinHash,
-      expires_at: new Date(new Date().getTime() + 60 * 1000),
+      expires_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
       validity: 'valid',
     })
 
@@ -260,7 +260,7 @@ export const withVerifiedConnection = function (context: TwoPartyContext) {
       connection_id: withAlice.id,
       oob_invite_id: fromAliceOOB.outOfBandRecord.id,
       pin_hash: pinHash,
-      expires_at: new Date(new Date().getTime() + 60 * 1000),
+      expires_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
       validity: 'valid',
     })
 
@@ -322,7 +322,7 @@ export async function withBobAndCharlie(context: ThreePartyContext) {
     connection_id: withAlice.id,
     oob_invite_id: fromAliceOOB.outOfBandRecord.id,
     pin_hash: pinHash,
-    expires_at: new Date(new Date().getTime() + 60 * 1000),
+    expires_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
     validity: 'valid',
   })
 
@@ -350,7 +350,7 @@ export async function withBobAndCharlie(context: ThreePartyContext) {
     connection_id: withCharlie.id,
     oob_invite_id: charlieOOB.outOfBandRecord.id,
     pin_hash: pinHash,
-    expires_at: new Date(new Date().getTime() + 60 * 1000),
+    expires_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
     validity: 'valid',
   })
 
@@ -369,7 +369,7 @@ export async function withBobAndCharlie(context: ThreePartyContext) {
     connection_id: withBob.id,
     oob_invite_id: charliesInvite.outOfBandRecord.id,
     pin_hash: pinHash,
-    expires_at: new Date(new Date().getTime() + 60 * 1000),
+    expires_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
     validity: 'valid',
   })
 

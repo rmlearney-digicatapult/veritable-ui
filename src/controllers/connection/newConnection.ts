@@ -625,7 +625,7 @@ export class NewConnectionController extends HTMLController {
           connection_id: connectionId,
           oob_invite_id: invitationId,
           pin_hash: pinHash,
-          expires_at: new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000),
+          expires_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
           validity: 'valid',
         })
       })
@@ -674,7 +674,7 @@ export class NewConnectionController extends HTMLController {
           connection_id: record.id,
           oob_invite_id: invitationId,
           pin_hash: pinHash,
-          expires_at: new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000),
+          expires_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
           validity: 'valid',
         })
         connectionId = record.id
