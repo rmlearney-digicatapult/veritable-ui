@@ -491,8 +491,8 @@ export class QueriesController extends HTMLController {
     try {
       const fullParams = {
         id: query.id,
-        createdTime: Math.floor(query.created_at.getTime() / 1000),
-        expiresTime: Math.floor(query.expires_at.getTime() / 1000),
+        createdTime: query.created_at,
+        expiresTime: query.expires_at,
         ...params,
       }
       const safeParams = submitQueryRpcParams.parse(fullParams)
@@ -559,8 +559,8 @@ export class QueriesController extends HTMLController {
         method: 'submit_query_response',
         params: {
           ...response,
-          createdTime: Math.floor(query.created_at.getTime() / 1000),
-          expiresTime: Math.floor(query.expires_at.getTime() / 1000),
+          createdTime: query.created_at,
+          expiresTime: query.expires_at,
         },
       })
 

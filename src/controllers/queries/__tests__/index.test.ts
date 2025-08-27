@@ -374,8 +374,8 @@ describe('QueriesController', () => {
             },
             id: 'ccaaaaaa-0000-4000-8000-d8ae0805059e',
             type: 'https://github.com/digicatapult/veritable-documentation/tree/main/schemas/veritable_messaging/query_types/total_carbon_embodiment/request/0.1',
-            createdTime: 1,
-            expiresTime: Math.floor(expiresAt.getTime() / 1000),
+            createdTime: new Date(1000),
+            expiresTime: expiresAt,
           },
         ])
       })
