@@ -10,7 +10,7 @@ describe('QueryRequestTemplates', () => {
   let clock: sinon.SinonFakeTimers
 
   beforeEach(() => {
-    clock = sinon.useFakeTimers(new Date('2025-08-06T12:00:00'))
+    clock = sinon.useFakeTimers(new Date('2025-08-06T12:00:00Z'))
   })
 
   afterEach(() => {
