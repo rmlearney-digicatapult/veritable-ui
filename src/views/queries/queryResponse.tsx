@@ -420,7 +420,7 @@ export default class QueryResponseTemplates {
             <tr>
               <td>Date Certified:</td>
               <td class="query-results-left-padding-table">
-                <time>{Html.escapeHtml(new Date(query.updated_at))}</time>
+                <time>{Html.escapeHtml(query.updated_at)}</time>
               </td>
             </tr>
             <tr>
@@ -522,7 +522,7 @@ export default class QueryResponseTemplates {
             <tr>
               <td>Timestamp:</td>
               <td class="query-results-left-padding-table">
-                <time>{Html.escapeHtml(new Date(query.updated_at))}</time>
+                <time>{Html.escapeHtml(query.updated_at)}</time>
               </td>
             </tr>
             <this.bavResponseRow heading={'Country'} value={isoCountries.getName(responseData.countryCode, 'en')} />
