@@ -11,7 +11,7 @@ import QueryListTemplates from '../../../views/queries/queriesList.js'
 import QueryRequestTemplates from '../../../views/queries/queryRequest.js'
 import QueryResponseTemplates, { ResponseFormProps } from '../../../views/queries/queryResponse.js'
 
-export const expiresAt = new Date('2025-08-06T15:33:20.589Z')
+export const expiresAt = new Date('2025-08-06T15:33:00.000Z')
 
 type QueryStatus = 'resolved' | 'pending_your_input' | 'pending_their_input' | 'forwarded'
 
