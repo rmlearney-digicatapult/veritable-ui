@@ -7,7 +7,7 @@ import { InvalidInputError } from '../../errors.js'
 import { PartialQueryPayload } from '../../models/arrays.js'
 import { Bav, type IBav } from '../../models/bav.js'
 import Database from '../../models/db/index.js'
-import { ConnectionRow, QueryRow, type QueryType, Where } from '../../models/db/types.js'
+import { ConnectionRow, QueryRow, Where, type QueryType } from '../../models/db/types.js'
 import {
   BavRes,
   BavResFields,
@@ -136,10 +136,15 @@ export class QueriesController extends HTMLController {
       connectionId: UUID
       productId: string
       quantity: number
-      expiresAt: string
+      expiresAt: Date
     }
   ) {
     const connection = await this.verifyConnection(req.log, body.connectionId)
+
+    // Ensure javascript Date object with seconds/millis trimmed to zero
+    // NB datetime-local in form is timezone-less so we assume UTC
+    // If we want to capture client-side timezone, need to pass from form
+    const expiry = new Date(new Date(body.expiresAt).toISOString().replace(/:\d{2}\.\d{3}Z$/, 'Z'))
 
     return await this.handleQueryRequest(
       req.log,
@@ -157,7 +162,7 @@ export class QueriesController extends HTMLController {
           },
         },
       },
-      new Date(body.expiresAt)
+      expiry
     )
   }
 
@@ -171,10 +176,15 @@ export class QueriesController extends HTMLController {
     @Body()
     body: {
       connectionId: UUID
-      expiresAt: string
+      expiresAt: Date
     }
   ) {
     const connection = await this.verifyConnection(req.log, body.connectionId)
+
+    // Ensure javascript Date object with seconds/millis trimmed to zero
+    // NB datetime-local in form is timezone-less so we assume UTC
+    // If we want to capture client-side timezone, need to pass from form
+    const expiry = new Date(new Date(body.expiresAt).toISOString().replace(/:\d{2}\.\d{3}Z$/, 'Z'))
 
     return await this.handleQueryRequest(
       req.log,
@@ -188,7 +198,7 @@ export class QueriesController extends HTMLController {
           },
         },
       },
-      new Date(body.expiresAt)
+      expiry
     )
   }
 
@@ -488,11 +498,13 @@ export class QueriesController extends HTMLController {
       expires_at: expiresTime,
     })
 
+    // NB created_at and expires_at stored in DB as js Date objects
+    // DRPC expects strings sent over the wire
     try {
       const fullParams = {
         id: query.id,
-        createdTime: query.created_at,
-        expiresTime: query.expires_at,
+        createdTime: query.created_at.toISOString(),
+        expiresTime: query.expires_at.toISOString(),
         ...params,
       }
       const safeParams = submitQueryRpcParams.parse(fullParams)
@@ -559,8 +571,8 @@ export class QueriesController extends HTMLController {
         method: 'submit_query_response',
         params: {
           ...response,
-          createdTime: query.created_at,
-          expiresTime: query.expires_at,
+          createdTime: query.created_at.toISOString(),
+          expiresTime: query.expires_at.toISOString(),
         },
       })
 
