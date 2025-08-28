@@ -117,6 +117,8 @@ export default class DrpcEvents {
         return
       }
 
+      // NB expiresTime sent over the wire as an ISO datetime string and parsed by zod as such
+      // Recorded in DB as a js Date object
       const [query] = await this.db.insert('query', {
         connection_id: connection.id,
         status: 'pending_your_input',
@@ -127,7 +129,7 @@ export default class DrpcEvents {
         response_id: params.id, //save to send back in response
         response: null,
         role: 'responder',
-        expires_at: params.expiresTime,
+        expires_at: new Date(params.expiresTime),
       })
       queryId = query.id
 
