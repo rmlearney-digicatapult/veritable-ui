@@ -76,6 +76,12 @@ export default class DrpcEvents {
     return
   }
 
+  /**
+   * Handles submitted DPRC query requests
+   * @param request - DRPC request containing an id, method descriptor, and query parameters
+   * @param agentConnectionId - the cloudagent's identifier for a given connection
+   * @returns void
+   */
   private async handleSubmitQueryRequest(
     request: DrpcRequest & { method: 'submit_query_request' },
     agentConnectionId: UUID
@@ -163,6 +169,12 @@ export default class DrpcEvents {
     }
   }
 
+  /**
+   * Handles submitted DPRC query responses
+   * @param request - DRPC response (as 'request') containing an id, method descriptor, and parameters
+   * @param agentConnectionId - the cloudagent's identifier for a given connection
+   * @returns void
+   */
   private async handleSubmitQueryResponse(
     request: DrpcRequest & { method: 'submit_query_response' },
     agentConnectionId: UUID
