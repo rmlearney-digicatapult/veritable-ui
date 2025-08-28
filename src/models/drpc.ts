@@ -42,8 +42,8 @@ export const typeToResponseSchemaMap: Record<QueryType, ResponseSchema> = {
 
 const baseQueryRequest = {
   id: z.uuid(),
-  createdTime: z.date(),
-  expiresTime: z.date(),
+  createdTime: z.iso.datetime(),
+  expiresTime: z.iso.datetime(),
 }
 export const carbonEmbodimentRequest = z.object({
   ...baseQueryRequest,
@@ -69,8 +69,8 @@ export type SubmitQueryRequest = {
 
 const baseQueryResponse = z.object({
   id: z.uuid(),
-  createdTime: z.date().optional(),
-  expiresTime: z.date().optional(),
+  createdTime: z.iso.datetime().optional(),
+  expiresTime: z.iso.datetime().optional(),
 })
 
 type BaseQueryResponse = z.infer<typeof baseQueryResponse>
@@ -143,8 +143,8 @@ export type DrpcQueryRequest = SubmitQueryRequest | SubmitQueryResponse
 
 export const drpcQueryAck = z.object({
   type: z.literal(`${schemaBaseUrl}/query_ack/0.1`),
-  createdTime: z.date().optional(),
-  expiresTime: z.date().optional(),
+  createdTime: z.iso.datetime().optional(),
+  expiresTime: z.iso.datetime().optional(),
 })
 
 export type DrpcQueryResponse = z.infer<typeof drpcQueryAck>
