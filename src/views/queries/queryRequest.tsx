@@ -216,6 +216,7 @@ export default class QueryRequestTemplates {
                   class="input-with-label"
                   type="datetime-local"
                   name="expiresAt"
+                  step="60"
                   required
                   min={new Date().toISOString().slice(0, -8)}
                 />
@@ -248,6 +249,7 @@ export default class QueryRequestTemplates {
                 class="input-with-label"
                 type="datetime-local"
                 name="expiresAt"
+                step="60"
                 required
                 min={new Date().toISOString().slice(0, -8)}
               />
