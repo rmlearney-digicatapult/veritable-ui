@@ -3,7 +3,7 @@ import { describe, it } from 'mocha'
 import QueryListTemplates from '../queriesList.js'
 
 describe('ConnectionTemplates', () => {
-  const sampleDate = new Date('2025-08-06T12:00:00Z')
+  const sampleDate = new Date('2025-08-06T11:00:00Z')
 
   describe('listPage', () => {
     it('should render with no connections', async () => {
