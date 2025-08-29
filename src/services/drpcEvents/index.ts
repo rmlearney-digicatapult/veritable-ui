@@ -21,6 +21,8 @@ import { neverFail } from '../../utils/promises.js'
 import VeritableCloudagentEvents, { DrpcRequest, eventData } from '../veritableCloudagentEvents.js'
 
 const drpcErrorCode = {
+  PARSE_ERROR: -32700,
+  INVALID_REQUEST: -32600,
   METHOD_NOT_FOUND: -32601,
   INVALID_PARAMS: -32602,
   INTERNAL_ERROR: -32603,
@@ -100,12 +102,12 @@ export default class DrpcEvents {
         params = submitQueryRpcParams.parse(request.params)
         this.logger.info('submitQueryRpcParams have been parsed %j', params)
       } catch (err) {
-        this.logger.warn('Invalid parameters received for request %s: %j', request.id, request.params)
+        this.logger.warn('Parsing error for request %s: %j', request.id, request.params)
         this.logger.debug('Parsing error %j', err)
         await this.cloudagent.submitDrpcResponse(request.id, {
           error: {
-            code: drpcErrorCode.INVALID_PARAMS,
-            message: `invalid params object`,
+            code: drpcErrorCode.PARSE_ERROR,
+            message: `Error parsing params object`,
           },
         })
         return
@@ -193,12 +195,12 @@ export default class DrpcEvents {
       try {
         params = submitQueryResponseRpcParams.parse(request.params)
       } catch (err) {
-        this.logger.warn('Invalid parameters received for request %s: %o', request.id, request.params)
+        this.logger.warn('Parsing error for request %s: %j', request.id, request.params)
         this.logger.debug('Parsing error %j', err)
         await this.cloudagent.submitDrpcResponse(request.id, {
           error: {
-            code: drpcErrorCode.INVALID_PARAMS,
-            message: 'invalid params object',
+            code: drpcErrorCode.PARSE_ERROR,
+            message: `Error parsing params object`,
           },
         })
         return
