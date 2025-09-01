@@ -144,6 +144,13 @@ export class QueriesController extends HTMLController {
     // Ensure javascript Date object with seconds/millis trimmed to zero
     // NB datetime-local in form is timezone-less so we assume UTC
     // If we want to capture client-side timezone, need to pass from form
+
+    /* TODO: Timezone support example
+    const DateTime = luxon.DateTime;
+const d = DateTime.fromISO('2019-07-09T18:45', {zone: 'America/Chicago'});
+console.log(d.toISO());
+console.log(d.toUTC().toISO());
+*/
     const expiry = new Date(new Date(body.expiresAt).toISOString().replace(/:\d{2}\.\d{3}Z$/, 'Z'))
 
     return await this.handleQueryRequest(
