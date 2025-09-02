@@ -10,7 +10,7 @@ import {
   ProductAndQuantity,
 } from '../../models/drpc.js'
 import { bicRegex, CountryCode } from '../../models/stringTypes.js'
-import { FormButton, LinkButton, Page } from '../common.js'
+import { FormattedTime, FormButton, LinkButton, Page } from '../common.js'
 import { typeMap } from './queryRequest.js'
 
 export interface ResponseFormProps {
@@ -272,12 +272,14 @@ export default class QueryResponseTemplates {
               hx-include="[name=countryCode]"
               hx-swap="innerHTML"
               required
+              autocomplete="off"
             >
               <option value="">Select country</option>
               {Object.entries(countries).map(([countryCode, name]) => (
                 <option value={countryCode}>{Html.escapeHtml(name)}</option>
               ))}
             </select>
+            <this.countryISOCode />
           </div>
           <form
             id="bav-form"
@@ -295,6 +297,24 @@ export default class QueryResponseTemplates {
           </form>
         </div>
       </div>
+    )
+  }
+
+  public countryISOCode = ({
+    countryCode,
+    swapOutOfBand,
+  }: {
+    countryCode?: string
+    swapOutOfBand?: boolean
+  }): JSX.Element => {
+    return (
+      <input
+        id="country-iso-code"
+        type="text"
+        readonly
+        hx-swap-oob={swapOutOfBand ? 'true' : undefined}
+        value={countryCode ? Html.escapeHtml(countryCode) : ''}
+      />
     )
   }
 
@@ -498,46 +518,48 @@ export default class QueryResponseTemplates {
         <div class="query-form-left">
           <h1>Beneficiary Account Validation</h1>
           <p class="query-form-text">A query to verify a company's financial details</p>
+          {query.role === 'requester' && this.BavInfoKey()}
         </div>
         <div class="query-form-right">
           <div class="row">
-            <h2>Query Information</h2>
-            <div style={{ maxHeight: '25px' }} class="list-item-status" data-status="success">
-              Resolved
-            </div>
+            <h3>Request Information:</h3>
           </div>
-          <br />
           <table class="query-response-view">
-            <tr>
-              <td>Company name:</td>
-              <td class="query-results-left-padding-table">{Html.escapeHtml(connection.company_name)}</td>
-            </tr>
             <tr>
               <td>Query:</td>
-              <td class="query-results-left-padding-table">Provide your company's financial details</td>
+              <td class="query-results-left-padding-table">Beneficiary Account Validation</td>
             </tr>
-          </table>
-          <h2>Response Information</h2>
-          <table class="query-response-view">
             <tr>
               <td>Timestamp:</td>
               <td class="query-results-left-padding-table">
-                <time>{Html.escapeHtml(new Date(query.updated_at))}</time>
+                <FormattedTime time={query.created_at} />
               </td>
             </tr>
-            <this.bavResponseRow heading={'Country'} value={isoCountries.getName(responseData.countryCode, 'en')} />
-            <this.bavResponseRow heading={'Name'} value={responseData.name} />
+          </table>
+          <h3>Response Information:</h3>
+          <h5>{Html.escapeHtml(connection.company_name)}</h5>
+          <table class="query-response-view">
+            <this.bavResponseRow
+              heading={'Country'}
+              value={`${isoCountries.getName(responseData.countryCode, 'en')} (${responseData.countryCode})`}
+            />
+            <this.bavResponseRow heading={'Company Name'} value={responseData.name} />
             <this.bavResponseRow heading={'Bank Identifier Code'} value={responseData.bic} />
             <this.bavResponseRow heading={'IBAN'} value={responseData.iban} />
             <this.bavResponseRow heading={'Account ID'} value={responseData.accountId} />
             <this.bavResponseRow heading={'Clearing System ID'} value={responseData.clearingSystemId} />
             <this.bavResponseRow heading={'Registration ID'} value={responseData.registrationId} />
+            <tr>
+              <td>Timestamp:</td>
+              <td class="query-results-left-padding-table">
+                <FormattedTime time={query.updated_at} />
+              </td>
+            </tr>
           </table>
 
           {query.role === 'requester' && (
             <>
               <div class="row">
-                <h2>Verification</h2>
                 <button
                   id="bav-verify-button"
                   class="button"
@@ -547,14 +569,23 @@ export default class QueryResponseTemplates {
                   hx-indicator="#bav-verification-results"
                   hx-swap="outerHTML"
                 >
-                  Verify
+                  Request Verification
                 </button>
+                <this.bavVerificationResults
+                  score={responseData.score}
+                  description={responseData.description}
+                  connectionId={connection.id}
+                />
               </div>
-              <this.bavVerificationResults
-                score={responseData.score}
-                description={responseData.description}
-                connectionId={connection.id}
-              />
+              <div id="bav-verify-info">
+                <p>
+                  After clicking the ‘Request Verification’ button, a Beneficiary Account Validation request will be
+                  sent to the BAV service. The process will take only few seconds, do not refresh the page before
+                  obtaining a result. If the result won’t be <b>Strong Match</b> (therefore <b>Partial Match</b> or{' '}
+                  <b>Weak Match</b> or <b>No Match</b>) the query will not be considered successful and you are required
+                  to create a new Beneficiary Account Validation query.
+                </p>
+              </div>
             </>
           )}
           <LinkButton text="Back to Queries" href="/queries" style="filled" />
@@ -573,23 +604,23 @@ export default class QueryResponseTemplates {
     connectionId: string
   }): JSX.Element => {
     const strongMatchTooltip = `Account details match.`
-    const partialMatchTooltip = `Account found. Potential typo in name.`
-    const weakMatchTooltip = `Account found. Name does not match.`
+    const partialMatchTooltip = `Potential typo.`
+    const weakMatchTooltip = `Account found - details don't match.`
     const noMatchTooltip = `Account not found.`
 
     const options = [
       { threshold: 0.95, tooltip: strongMatchTooltip, icon: 'tick', offerNewQuery: false },
-      { threshold: 0.5, tooltip: partialMatchTooltip, icon: 'tilde', offerNewQuery: true },
-      { threshold: 0, tooltip: weakMatchTooltip, icon: 'tilde', offerNewQuery: true },
+      { threshold: 0.5, tooltip: partialMatchTooltip, icon: 'info', offerNewQuery: true },
+      { threshold: 0, tooltip: weakMatchTooltip, icon: 'info', offerNewQuery: true },
       { threshold: -Infinity, tooltip: noMatchTooltip, icon: 'cross', offerNewQuery: true },
     ]
     const option = options.find((o) => score! > o.threshold)
 
     return (
       <div id="bav-verification-results">
-        <table class={`query-response-view`}>
+        <table>
           <tr>
-            <td>Description:</td>
+            <td>Result:</td>
             <td id="bav-verification-results-details" class="query-results-left-padding-table" title={option?.tooltip}>
               {score !== undefined && description !== undefined ? (
                 <>
@@ -601,7 +632,7 @@ export default class QueryResponseTemplates {
                       data-variant="action"
                       href={`/queries/new?type=beneficiary_account_validation&connectionId=${connectionId}`}
                     >
-                      Send new query
+                      Request new BAV query
                     </a>
                   )}
                 </>
@@ -630,18 +661,14 @@ export default class QueryResponseTemplates {
   private queryResponseSuccess = (props: ResponseFormProps): JSX.Element => {
     return (
       <div id="new-query-confirmation-text">
-        <h2>Thank you for your response!</h2>
-        <p>
-          You have successfully forwarded a ${Html.escapeHtml(typeMap[props.type].name)} query to the following
-          supplier(s):
-        </p>
+        <h4>Thank you for your response!</h4>
+        <p>Your query has been successfully responded to the following supplier:</p>
         <i>
           <p>{Html.escapeHtml(props.connection.company_name)}</p>
         </i>
         <p>
-          Once all supplier responses are received, they will be automatically gathered and securely sent to Alice’s
-          Company. You do not need to take any further action. The process is fully automated, ensuring transparency and
-          trust in the final result.
+          The requester will verify your response and the result will be shared with you. No further action is needed on
+          your part. You can trust that the process is secure, transparent, and streamlined for your convenience.
         </p>
         <p>You can check the status of your forwarded queries in the Queries section of your dashboard.</p>
         <br />
@@ -662,4 +689,33 @@ export default class QueryResponseTemplates {
       </div>
     )
   }
+
+  private BavInfoKey = () => (
+    <div id="bav-verify-key">
+      <div>
+        <span class={`bav-verify-key-icon`} />
+        Verification results:
+      </div>
+      <div>
+        <b>Strong Match</b>
+        <span class={`bav-verify-icon tick`} />
+        <p>Account details match</p>
+      </div>
+      <div>
+        <b>Partial Match</b>
+        <span class={`bav-verify-icon info`} />
+        <p>Potential typo</p>
+      </div>
+      <div>
+        <b>Weak Match</b>
+        <span class={`bav-verify-icon info`} />
+        <p>Account found match - details don't match</p>
+      </div>
+      <div>
+        <b>No Match</b>
+        <span class={`bav-verify-icon cross`} />
+        <p>Account not found</p>
+      </div>
+    </div>
+  )
 }
