@@ -97,17 +97,28 @@ export default class DrpcEvents {
         request.method
       )
 
+      if (!request.params || Object.keys(request.params).length === 0) {
+        this.logger.warn('No parameters found for request %o', request)
+        this.logger.debug('Parameter error')
+        await this.cloudagent.submitDrpcResponse(request.id, {
+          error: {
+            code: drpcErrorCode.INVALID_PARAMS,
+            message: `invalid params object`,
+          },
+        })
+        return
+      }
+
       let params: SubmitQueryRpcParams
       try {
         params = submitQueryRpcParams.parse(request.params)
-        this.logger.info('submitQueryRpcParams have been parsed %j', params)
       } catch (err) {
-        this.logger.warn('Invalid parameters received for request %o', request)
+        this.logger.warn('Unable to parse parameters for request %o', request)
         this.logger.debug(err, 'Parsing error')
         await this.cloudagent.submitDrpcResponse(request.id, {
           error: {
             code: drpcErrorCode.PARSE_ERROR,
-            message: `Error parsing params object`,
+            message: `error parsing params object`,
           },
         })
         return
@@ -191,16 +202,28 @@ export default class DrpcEvents {
         request.method
       )
 
+      if (!request.params || Object.keys(request.params).length === 0) {
+        this.logger.warn('No parameters found for request %o', request)
+        this.logger.debug('Parameter error')
+        await this.cloudagent.submitDrpcResponse(request.id, {
+          error: {
+            code: drpcErrorCode.INVALID_PARAMS,
+            message: `invalid params object`,
+          },
+        })
+        return
+      }
+
       let params: SubmitQueryResponseRpcParams
       try {
         params = submitQueryResponseRpcParams.parse(request.params)
       } catch (err) {
-        this.logger.warn('Invalid parameters received for request %o', request)
+        this.logger.warn('Unable to parse parameters for request %o', request)
         this.logger.debug(err, 'Parsing error')
         await this.cloudagent.submitDrpcResponse(request.id, {
           error: {
             code: drpcErrorCode.PARSE_ERROR,
-            message: `Error parsing params object`,
+            message: `error parsing params object`,
           },
         })
         return

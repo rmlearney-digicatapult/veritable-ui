@@ -347,8 +347,8 @@ describe('DrpcEvents', function () {
           goodRequestId,
           {
             error: {
-              code: -32602,
-              message: 'invalid params object',
+              code: -32700,
+              message: 'error parsing params object',
             },
           },
         ])
@@ -817,8 +817,8 @@ describe('DrpcEvents', function () {
           goodResponseId,
           {
             error: {
-              code: -32602,
-              message: 'invalid params object',
+              code: -32700,
+              message: 'error parsing params object',
             },
           },
         ])
