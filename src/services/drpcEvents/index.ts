@@ -151,7 +151,7 @@ export default class DrpcEvents {
         this.logger.warn('Error thrown whilst processing DRPC request %s', err.message)
       } else {
         this.logger.warn('Unknown error thrown whilst processing DRPC request')
-        this.logger.trace(`err: %o`, err)
+        this.logger.trace(err)
       }
 
       if (queryId !== null) {
@@ -252,7 +252,7 @@ export default class DrpcEvents {
         this.logger.warn('Error thrown whilst processing DRPC request %s', err.message)
       } else {
         this.logger.warn('Unknown error thrown whilst processing DRPC request')
-        this.logger.trace(`err: %o`, err)
+        this.logger.trace(err)
       }
 
       // fire and forget? I think something we could handle at the errorsHandler (the global one)
@@ -321,7 +321,6 @@ export default class DrpcEvents {
         'submit_query_response',
         safeParams
       )
-      this.logger.info('submitting DRPC request %j', rpcResponse)
 
       if (!rpcResponse) throw new Error('DRPC has not responded')
 
@@ -363,7 +362,7 @@ export default class DrpcEvents {
         this.logger.warn('error in rpc response %s to query %s', rpcResponse.id, childQuery?.id)
         this.logger.debug('DRPC response %j', rpcResponse)
       }
-      this.logger.warn('unexpected error occurred', JSON.stringify(err))
+      this.logger.warn(err, 'unexpected error occurred')
       this.logger.debug('handling %s child query failed %j', childQuery?.id, childQuery)
 
       await this.db.update('query', { id: childQuery.id }, { status: 'errored' })
