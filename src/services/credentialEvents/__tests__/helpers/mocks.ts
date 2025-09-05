@@ -84,7 +84,7 @@ const defaultCompanyDetailsOptions = {
   dbGetConnectionInvites: [
     {
       pin_hash: await argon2.hash('123456', { secret: invitePinSecret }),
-      expires_at: new Date(10), // needs to be in the future
+      expires_at: new Date(1000), // needs to be in the future
     },
   ] as unknown,
   dbIncrement: [
