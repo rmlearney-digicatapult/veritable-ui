@@ -4,6 +4,7 @@ import { container } from 'tsyringe'
 
 import { Env } from '../env/index.js'
 
+import { DateTime } from 'luxon'
 import type { ConnectionRow, QueryRow } from '../models/db/types.js'
 import type { Credential } from '../models/veritableCloudagent/internal.js'
 
@@ -317,10 +318,17 @@ export const credentialStatusToClass = (status: CredentialStatus): JSX.Element =
 export const FormattedTime = ({ time }: { time: Date }) => (
   <time>
     {Html.escapeHtml(
-      `${time.toLocaleDateString('en-GB')} - ${time.toLocaleTimeString('en-GB', {
-        hour: '2-digit',
-        minute: '2-digit',
-      })}`
+      DateTime.fromJSDate(time, { zone: env.get('LOCAL_TIMEZONE') })
+        .setLocale('en-GB')
+        .toLocaleString({
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        })
+        .replace(',', ' -')
     )}
   </time>
 )
