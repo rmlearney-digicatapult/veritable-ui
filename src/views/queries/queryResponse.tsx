@@ -440,7 +440,7 @@ export default class QueryResponseTemplates {
             <tr>
               <td>Date Certified:</td>
               <td class="query-results-left-padding-table">
-                <time>{Html.escapeHtml(query.updated_at)}</time>
+                <FormattedTime time={query.updated_at} />
               </td>
             </tr>
             <tr>
@@ -532,7 +532,7 @@ export default class QueryResponseTemplates {
             <tr>
               <td>Timestamp:</td>
               <td class="query-results-left-padding-table">
-                <time>{Html.escapeHtml(query.updated_at)}</time>
+                <FormattedTime time={query.updated_at} />
               </td>
             </tr>
           </table>
