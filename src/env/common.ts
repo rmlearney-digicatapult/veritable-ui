@@ -75,6 +75,7 @@ export const defaultConfig = {
   IPID_API_URL: envalid.str({ default: 'https://sandbox.ipid.works' }),
   IPID_API_KEY: envalid.str(),
   IPID_CUSTOMER_ID: envalid.str({ default: 'digicatapult-uat' }),
+  LOCAL_TIMEZONE: envalid.str({ default: 'Europe/London' }),
 }
 
 // we mainly separate out the raw environment loading so we can override it safely in tests
