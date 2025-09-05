@@ -8,7 +8,7 @@ import QueryResponseTemplates from '../queryResponse.js'
 const templates = new QueryResponseTemplates()
 const sampleDate = new Date('2025-08-06T11:00:00Z')
 const connectionsExample: ConnectionRow[] = [{}, {}, {}, {}].map((_, i) => ({
-  id: `${mockIds.connectionId.substr(0, mockIds.connectionId.length - 1)}${i}`,
+  id: `${mockIds.connectionId.slice(0, -1)}${i}`,
   company_name: 'I own you',
   company_number: '3546783',
   status: 'verified_both',
@@ -38,7 +38,7 @@ const queryExample: QueryRow = {
   role: 'requester',
   created_at: new Date(),
   updated_at: new Date(),
-  expires_at: new Date(),
+  expires_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
 }
 
 describe('Partial Query', () => {
