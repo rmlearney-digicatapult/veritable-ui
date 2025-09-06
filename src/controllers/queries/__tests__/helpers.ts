@@ -1,6 +1,7 @@
 import { Readable } from 'node:stream'
 import sinon from 'sinon'
 
+import { Env } from '../../../env/index.js'
 import { IBav } from '../../../models/bav.js'
 import Database from '../../../models/db/index.js'
 import { ConnectionRow, QueryRow } from '../../../models/db/types.js'
@@ -193,6 +194,11 @@ export const withQueriesMocks = (testOptions: Partial<QueryMockOptions> = {}) =>
       Promise.resolve()
     }),
   }
+  const mockEnv = {
+    get: sinon.stub().callsFake((name: string) => {
+      if (name === 'LOCAL_TIMEZONE') return 'Europe/London'
+    }),
+  }
   const bavApi = {
     validate: () => Promise.resolve({ score: 1, description: 'Strong match' }),
   }
@@ -204,6 +210,7 @@ export const withQueriesMocks = (testOptions: Partial<QueryMockOptions> = {}) =>
     queryTemplateMock,
     dbMock,
     cloudagentMock,
+    mockEnv,
     bavApi,
     args: [
       queryRequestTemplateMock,
@@ -212,6 +219,7 @@ export const withQueriesMocks = (testOptions: Partial<QueryMockOptions> = {}) =>
       queryListTemplateMock,
       cloudagentMock as unknown as VeritableCloudagent,
       dbMock as unknown as Database,
+      mockEnv as unknown as Env,
       bavApi as unknown as IBav,
     ] as const,
   }

@@ -4,6 +4,7 @@ import { describe, it } from 'mocha'
 import sinon from 'sinon'
 
 import { Request } from 'express'
+import { DateTime } from 'luxon'
 import { InvalidInputError } from '../../../errors.js'
 import { mockLogger } from '../../__tests__/helpers.js'
 import { QueriesController } from '../index.js'
@@ -75,7 +76,7 @@ describe('QueriesController', () => {
     })
 
     it('should call page with stage success as expected', async () => {
-      const { dbMock, args } = withQueriesMocks()
+      const { mockEnv, dbMock, args } = withQueriesMocks()
       const controller = new QueriesController(...args)
       const result = await controller
         .carbonEmbodimentSubmit(req, {
@@ -85,6 +86,11 @@ describe('QueriesController', () => {
           expiresAt,
         })
         .then(toHTMLString)
+
+      const expiryAfterController = DateTime.fromJSDate(expiresAt, { zone: 'utc' })
+        .setZone(mockEnv.get('LOCAL_TIMEZONE'), { keepLocalTime: true })
+        .set({ second: 0, millisecond: 0 })
+        .toJSDate()
 
       expect(dbMock.insert.getCall(0).args).to.deep.equal([
         'query',
@@ -105,7 +111,7 @@ describe('QueriesController', () => {
           response_id: null,
           role: 'requester',
           status: 'pending_their_input',
-          expires_at: expiresAt,
+          expires_at: expiryAfterController,
         },
       ])
       expect(result).to.equal('queryForm_success_queryForm')
