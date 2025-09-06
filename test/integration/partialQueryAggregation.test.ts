@@ -150,6 +150,12 @@ describe('partial query aggregation', function () {
       })
     })
 
+    it('has the same expiry timestamp on Alice and Charlie', async () => {
+      const [aliceQuery] = await context.db.alice.get('query')
+      const [charlieQuery] = await context.db.charlie.get('query')
+      expect(aliceQuery.expires_at.toISOString()).to.equal(charlieQuery.expires_at.toISOString())
+    })
+
     describe('and when Charlie responds to partial query', () => {
       beforeEach(async () => {
         const queryId = await context.db.charlie.get('query').then((res) => res[0].id)
