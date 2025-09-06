@@ -33,7 +33,9 @@ before(async function () {
     3002,
     '3211809',
     'US' as CountryCode,
-    'ny_state' as RegistryType
+    'ny_state' as RegistryType,
+    'America/New_York',
+    'en-US'
   )
 
   const database = knex(aliceDbConfig)

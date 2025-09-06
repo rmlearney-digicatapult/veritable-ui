@@ -26,7 +26,9 @@ export async function bringUpVeritableUIContainer(
   hostPort: number,
   invitationFromCompanyNumber: string,
   localRegistryCountryToUse: string = 'GB',
-  localRegistryToUse: string = 'company_house'
+  localRegistryToUse: string = 'company_house',
+  localTimezone: string = 'Europe/London',
+  localeCode: string = 'en-GB'
 ) {
   const base = await GenericContainer.fromDockerfile('./').build()
 
@@ -73,6 +75,8 @@ export async function bringUpVeritableUIContainer(
       IPID_CUSTOMER_ID: 'ipid-customer-id',
       OPEN_CORPORATES_API_URL: 'http://wiremock:8080',
       OPEN_CORPORATES_API_KEY: 'test-key',
+      LOCAL_TIMEZONE: localTimezone,
+      LOCALE_CODE: localeCode,
     })
     .withCommand(['sh', '-c', 'node ./node_modules/.bin/knex migrate:latest; npm start'])
     .withWaitStrategy(Wait.forListeningPorts())
