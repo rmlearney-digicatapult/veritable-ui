@@ -2,7 +2,9 @@ import express from 'express'
 import { Body, Get, Path, Post, Produces, Query, Request, Route, Security, SuccessResponse } from 'tsoa'
 import { inject, injectable } from 'tsyringe'
 
+import { DateTime } from 'luxon'
 import { Logger } from 'pino'
+import { Env } from '../../env/index.js'
 import { InvalidInputError } from '../../errors.js'
 import { PartialQueryPayload } from '../../models/arrays.js'
 import { Bav, type IBav } from '../../models/bav.js'
@@ -43,6 +45,7 @@ export class QueriesController extends HTMLController {
     private queryManagementTemplates: QueryListTemplates,
     private cloudagent: VeritableCloudagent,
     private db: Database,
+    private env: Env,
     @inject(Bav) private bavApi: IBav
   ) {
     super()
@@ -142,16 +145,13 @@ export class QueriesController extends HTMLController {
     const connection = await this.verifyConnection(req.log, body.connectionId)
 
     // Ensure javascript Date object with seconds/millis trimmed to zero
-    // NB datetime-local in form is timezone-less so we assume UTC
-    // If we want to capture client-side timezone, need to pass from form
+    // NB datetime-local in form is timezone-less so we assume UTC then
+    // convert to local timezone using Luxon
 
-    /* TODO: Timezone support example
-    const DateTime = luxon.DateTime;
-const d = DateTime.fromISO('2019-07-09T18:45', {zone: 'America/Chicago'});
-console.log(d.toISO());
-console.log(d.toUTC().toISO());
-*/
-    const expiry = new Date(new Date(body.expiresAt).toISOString().replace(/:\d{2}\.\d{3}Z$/, 'Z'))
+    const expiry = DateTime.fromJSDate(body.expiresAt, { zone: 'utc' })
+      .setZone(this.env.get('LOCAL_TIMEZONE'), { keepLocalTime: true })
+      .set({ second: 0, millisecond: 0 })
+      .toJSDate()
 
     return await this.handleQueryRequest(
       req.log,
@@ -189,9 +189,13 @@ console.log(d.toUTC().toISO());
     const connection = await this.verifyConnection(req.log, body.connectionId)
 
     // Ensure javascript Date object with seconds/millis trimmed to zero
-    // NB datetime-local in form is timezone-less so we assume UTC
-    // If we want to capture client-side timezone, need to pass from form
-    const expiry = new Date(new Date(body.expiresAt).toISOString().replace(/:\d{2}\.\d{3}Z$/, 'Z'))
+    // NB datetime-local in form is timezone-less so we assume UTC then
+    // convert to local timezone using Luxon
+
+    const expiry = DateTime.fromJSDate(body.expiresAt, { zone: 'utc' })
+      .setZone(this.env.get('LOCAL_TIMEZONE'), { keepLocalTime: true })
+      .set({ second: 0, millisecond: 0 })
+      .toJSDate()
 
     return await this.handleQueryRequest(
       req.log,
