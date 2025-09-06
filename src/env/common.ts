@@ -76,6 +76,7 @@ export const defaultConfig = {
   IPID_API_KEY: envalid.str(),
   IPID_CUSTOMER_ID: envalid.str({ default: 'digicatapult-uat' }),
   LOCAL_TIMEZONE: envalid.str({ default: 'Europe/London' }),
+  LOCALE_CODE: envalid.str({ default: 'en-GB' }),
 }
 
 // we mainly separate out the raw environment loading so we can override it safely in tests

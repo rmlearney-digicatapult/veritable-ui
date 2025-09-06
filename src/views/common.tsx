@@ -319,7 +319,7 @@ export const FormattedTime = ({ time }: { time: Date }) => (
   <time>
     {Html.escapeHtml(
       DateTime.fromJSDate(time, { zone: env.get('LOCAL_TIMEZONE') })
-        .setLocale('en-GB')
+        .setLocale(env.get('LOCALE_CODE'))
         .toLocaleString({
           year: 'numeric',
           month: '2-digit',
