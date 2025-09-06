@@ -150,7 +150,7 @@ describe('partial query aggregation', function () {
       })
     })
 
-    it('has the same expiry timestamp on Alice and Charlie', async () => {
+    it("has the same expiry timestamp in Alice and Charlie's databases", async () => {
       const [aliceQuery] = await context.db.alice.get('query')
       const [charlieQuery] = await context.db.charlie.get('query')
       expect(aliceQuery.expires_at.toISOString()).to.equal(charlieQuery.expires_at.toISOString())
