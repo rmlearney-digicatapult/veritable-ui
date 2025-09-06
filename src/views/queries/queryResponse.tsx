@@ -581,9 +581,9 @@ export default class QueryResponseTemplates {
                 <p>
                   After clicking the ‘Request Verification’ button, a Beneficiary Account Validation request will be
                   sent to the BAV service. The process will take only few seconds, do not refresh the page before
-                  obtaining a result. If the result won’t be <b>Strong Match</b> (therefore <b>Partial Match</b> or{' '}
-                  <b>Weak Match</b> or <b>No Match</b>) the query will not be considered successful and you are required
-                  to create a new Beneficiary Account Validation query.
+                  obtaining a result. If the result is not a <b>Strong Match</b> (therefore a <b>Partial Match</b> or{' '}
+                  <b>Weak Match</b> or <b>No Match</b>) the query will not be considered successful. You may need to
+                  contact the other party and create a new Beneficiary Account Validation query.
                 </p>
               </div>
             </>
