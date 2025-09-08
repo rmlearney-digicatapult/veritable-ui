@@ -39,7 +39,12 @@ test.describe('Connection via Open Corporates', () => {
       await expect(page.locator('#new-invite-country-code-display')).toHaveValue('GB')
       await page.locator('#third-party-registry-radio').click({ delay: 100 })
 
-      await page.fill('#new-invite-company-number-input', '00102498')
+      const companyNumber = '00102498'
+      const contentWithoutLastChar = companyNumber.slice(0, -1)
+      const lastChar = companyNumber.slice(-1)
+
+      await page.fill('#new-invite-company-number-input', contentWithoutLastChar)
+      await page.locator('#new-invite-company-number-input').press(lastChar, { delay: 100 })
       await page.fill('#new-invite-email-input', 'alice@testmail.com')
 
       const feedbackElement = page.locator('#new-connection-feedback')

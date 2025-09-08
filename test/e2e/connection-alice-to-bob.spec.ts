@@ -38,7 +38,12 @@ test.describe('Connection from Alice to Bob', () => {
       await page.selectOption('#new-invite-country-select', 'United Kingdom')
       await expect(page.locator('#new-invite-country-code-display')).toHaveValue('GB')
 
-      await page.fill('#new-invite-company-number-input', '04659351')
+      const companyNumber = '04659351'
+      const contentWithoutLastChar = companyNumber.slice(0, -1)
+      const lastChar = companyNumber.slice(-1)
+
+      await page.fill('#new-invite-company-number-input', contentWithoutLastChar)
+      await page.locator('#new-invite-company-number-input').press(lastChar, { delay: 100 })
       await page.fill('#new-invite-email-input', 'alice@testmail.com')
 
       const feedbackElement = page.locator('#new-connection-feedback')
